@@ -52,7 +52,7 @@ setInterval(updateCountdown, 1000);
 // Only animate if IntersectionObserver is supported
 if ('IntersectionObserver' in window) {
   const revealEls = document.querySelectorAll(
-    '.schedule-card, .aso-card, .hotel-card, .gallery-item, .story-text, .story-image-wrap'
+    '.schedule-card, .aso-card, .hotel-card, .story-text, .story-image-wrap'
   );
 
   const observer = new IntersectionObserver(
