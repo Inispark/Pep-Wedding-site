@@ -48,6 +48,78 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
+// ── LIGHTBOX ──
+const lightbox   = document.getElementById('lightbox');
+const lbImg      = document.getElementById('lbImg');
+const lbClose    = document.getElementById('lbClose');
+const lbPrev     = document.getElementById('lbPrev');
+const lbNext     = document.getElementById('lbNext');
+const lbBackdrop = document.getElementById('lbBackdrop');
+const lbCounter  = document.getElementById('lbCounter');
+
+// Collect only the real images (not aria-hidden duplicates)
+const galleryImgs = Array.from(
+  document.querySelectorAll('.gallery-row-inner img:not([aria-hidden])')
+);
+
+// Deduplicate by src so each photo appears once
+const seen = new Set();
+const uniqueImgs = galleryImgs.filter(img => {
+  if (seen.has(img.src)) return false;
+  seen.add(img.src);
+  return true;
+});
+
+let current = 0;
+
+function openLightbox(index) {
+  current = index;
+  lbImg.src = uniqueImgs[current].src;
+  lbCounter.textContent = `${current + 1} / ${uniqueImgs.length}`;
+  lightbox.hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.hidden = true;
+  document.body.style.overflow = '';
+  lbImg.src = '';
+}
+
+function showImage(index) {
+  current = (index + uniqueImgs.length) % uniqueImgs.length;
+  lbImg.classList.add('fading');
+  setTimeout(() => {
+    lbImg.src = uniqueImgs[current].src;
+    lbCounter.textContent = `${current + 1} / ${uniqueImgs.length}`;
+    lbImg.classList.remove('fading');
+  }, 150);
+}
+
+uniqueImgs.forEach((img, i) => {
+  img.addEventListener('click', () => openLightbox(i));
+});
+
+// Also wire up the aria-hidden duplicates to open the same image
+document.querySelectorAll('.gallery-row-inner img[aria-hidden]').forEach(dup => {
+  dup.addEventListener('click', () => {
+    const idx = uniqueImgs.findIndex(img => img.src === dup.src);
+    if (idx !== -1) openLightbox(idx);
+  });
+});
+
+lbClose.addEventListener('click', closeLightbox);
+lbBackdrop.addEventListener('click', closeLightbox);
+lbPrev.addEventListener('click', () => showImage(current - 1));
+lbNext.addEventListener('click', () => showImage(current + 1));
+
+document.addEventListener('keydown', e => {
+  if (lightbox.hidden) return;
+  if (e.key === 'Escape')     closeLightbox();
+  if (e.key === 'ArrowLeft')  showImage(current - 1);
+  if (e.key === 'ArrowRight') showImage(current + 1);
+});
+
 // ── SCROLL REVEAL: fade-in on scroll ──
 // Only animate if IntersectionObserver is supported
 if ('IntersectionObserver' in window) {
