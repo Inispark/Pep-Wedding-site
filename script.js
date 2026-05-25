@@ -49,26 +49,26 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 // ── SCROLL REVEAL: fade-in on scroll ──
-const revealEls = document.querySelectorAll(
-  '.schedule-card, .aso-card, .hotel-card, .gallery-item, .story-text, .story-image-wrap'
-);
+// Only animate if IntersectionObserver is supported
+if ('IntersectionObserver' in window) {
+  const revealEls = document.querySelectorAll(
+    '.schedule-card, .aso-card, .hotel-card, .gallery-item, .story-text, .story-image-wrap'
+  );
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-);
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.05, rootMargin: '0px 0px 0px 0px' }
+  );
 
-revealEls.forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(24px)';
-  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-  observer.observe(el);
-});
+  revealEls.forEach(el => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
+}
