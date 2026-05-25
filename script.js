@@ -48,40 +48,6 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ── RSVP FORM: Formspree AJAX ──
-const rsvpForm = document.getElementById('rsvpForm');
-const formSuccess = document.getElementById('formSuccess');
-const formError = document.getElementById('formError');
-
-rsvpForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = rsvpForm.querySelector('button[type="submit"]');
-  btn.textContent = 'Sending…';
-  btn.disabled = true;
-  formSuccess.hidden = true;
-  formError.hidden = true;
-
-  try {
-    const res = await fetch(rsvpForm.action, {
-      method: 'POST',
-      body: new FormData(rsvpForm),
-      headers: { Accept: 'application/json' },
-    });
-    if (res.ok) {
-      rsvpForm.reset();
-      formSuccess.hidden = false;
-      formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    } else {
-      throw new Error('Server error');
-    }
-  } catch {
-    formError.hidden = false;
-  } finally {
-    btn.textContent = 'Send RSVP 💌';
-    btn.disabled = false;
-  }
-});
-
 // ── SCROLL REVEAL: fade-in on scroll ──
 const revealEls = document.querySelectorAll(
   '.schedule-card, .aso-card, .hotel-card, .gallery-item, .story-text, .story-image-wrap'

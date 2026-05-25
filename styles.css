@@ -488,6 +488,9 @@ section { padding: 5rem 0; }
   gap: 1.5rem;
   margin-bottom: 2.5rem;
 }
+.aso-grid--four {
+  grid-template-columns: repeat(4, 1fr);
+}
 .aso-card {
   background: var(--white);
   border-radius: var(--radius);
@@ -610,8 +613,7 @@ section { padding: 5rem 0; }
 }
 .gallery-item--wide img { aspect-ratio: 16/9; }
 
-/* ── RSVP FORM ── */
-#rsvp form { display: flex; flex-direction: column; gap: 1.25rem; }
+/* ── RSVP ── */
 .rsvp-personal-note {
   font-family: var(--font-sans);
   font-size: 0.8rem;
@@ -620,68 +622,32 @@ section { padding: 5rem 0; }
   margin-top: 0.5rem;
   letter-spacing: 0.02em;
 }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-.form-group label {
-  font-family: var(--font-sans);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-mid);
-}
-.req { color: var(--gold); }
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  color: var(--text-dark);
+.google-form-wrap {
   background: var(--white);
-  border: 1.5px solid var(--cream-dark);
   border-radius: var(--radius);
-  padding: 0.75rem 1rem;
-  transition: border-color var(--transition);
-  outline: none;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--cream-dark);
+}
+.google-form-wrap iframe {
+  display: block;
   width: 100%;
-  appearance: none;
+  min-height: 900px;
+  border: none;
 }
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus { border-color: var(--gold); }
-
-.form-group select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C4A23A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  padding-right: 2.5rem;
-}
-.form-group textarea { resize: vertical; min-height: 120px; }
-
-.form-submit-wrap { text-align: center; margin-top: 0.5rem; }
-
-.form-success {
-  background: #f0f9f0;
-  border: 1px solid #a8d5a8;
-  border-radius: var(--radius);
-  padding: 1.25rem;
+.form-fallback {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-light);
   text-align: center;
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  color: #2d6a2d;
+  padding: 1rem;
+  border-top: 1px solid var(--cream-dark);
 }
-.form-error {
-  background: #fdf0f0;
-  border: 1px solid #e8a8a8;
-  border-radius: var(--radius);
-  padding: 1.25rem;
-  text-align: center;
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  color: #8b2020;
+.form-fallback a {
+  color: var(--gold-dark);
+  font-weight: 700;
+  text-decoration: underline;
 }
-.form-error a { color: var(--gold-dark); text-decoration: underline; }
 
 /* ── FOOTER ── */
 #footer {
@@ -773,7 +739,8 @@ section { padding: 5rem 0; }
   .schedule-grid { grid-template-columns: 1fr; }
 
   /* aso-ebi */
-  .aso-grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto 2.5rem; }
+  .aso-grid,
+  .aso-grid--four { grid-template-columns: 1fr 1fr; max-width: 480px; margin: 0 auto 2.5rem; }
 
   /* hotels */
   .hotels-grid { grid-template-columns: 1fr; }
