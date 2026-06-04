@@ -48,6 +48,18 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
+// ── REGISTRY: copy password ──
+const regCopy  = document.getElementById('regCopy');
+const regLabel = document.getElementById('regCopyLabel');
+if (regCopy) {
+  regCopy.addEventListener('click', () => {
+    navigator.clipboard.writeText('victorolaolu').then(() => {
+      regLabel.textContent = 'Copied!';
+      setTimeout(() => { regLabel.textContent = 'Copy'; }, 2000);
+    });
+  });
+}
+
 // ── LIGHTBOX ──
 const lightbox   = document.getElementById('lightbox');
 const lbImg      = document.getElementById('lbImg');
